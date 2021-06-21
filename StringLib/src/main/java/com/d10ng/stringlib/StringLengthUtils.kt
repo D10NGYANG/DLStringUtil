@@ -1,5 +1,7 @@
 package com.d10ng.stringlib
 
+import java.util.*
+
 /**
  * 以字节单位获得字符串的长度
  * 汉字 - 占两个Byte长度
@@ -47,4 +49,18 @@ fun String.up2Length(
         if (isInStart) result.toString().substring(result.length - length)
         else result.toString().substring(0, length)
     } else result.toString()
+}
+
+/**
+ * 获取字符串的第一个字并转换成大写的
+ * @receiver String
+ * @return String
+ */
+fun String.getFirstUpperCase(): String {
+    return try {
+        this.substring(0, 1).uppercase(Locale.getDefault())
+    } catch (e: Exception) {
+        e.printStackTrace()
+        ""
+    }
 }
