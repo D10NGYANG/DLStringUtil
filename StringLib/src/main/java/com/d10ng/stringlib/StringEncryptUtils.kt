@@ -4,6 +4,7 @@ import android.util.Base64
 import java.io.ByteArrayOutputStream
 import java.nio.charset.Charset
 import java.security.KeyFactory
+import java.security.MessageDigest
 import java.security.spec.X509EncodedKeySpec
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
@@ -108,5 +109,23 @@ private fun Cipher.doLongerCipherFinal(source: ByteArray): ByteArray {
     }
     out.close()
     return out.toByteArray()
+}
+
+/**
+ * md5加密
+ * @receiver [String]
+ * @return [String]
+ */
+fun String.md5(): String {
+    val hash = MessageDigest.getInstance("MD5").digest(this.toByteArray())
+    val hex = StringBuilder(hash.size * 2)
+    for (b in hash) {
+        var str = Integer.toHexString(b.toInt())
+        if (b < 0x10) {
+            str = "0$str"
+        }
+        hex.append(str.substring(str.length -2))
+    }
+    return hex.toString()
 }
 
