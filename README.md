@@ -3,7 +3,7 @@
 
 ## 使用
 1 Add it in your root build.gradle at the end of repositories:
-```xml
+```gradle
 allprojects {
   repositories {
     ...
@@ -12,13 +12,13 @@ allprojects {
 }
 ```
 2 Add the dependency
-```xml
+```gradle
 dependencies {
-        implementation 'com.github.D10NGYANG:DLStringUtil:1.1'
+        implementation 'com.github.D10NGYANG:DLStringUtil:1.2'
 }
 ```
 3 混淆
-```xml
+```properties
 -keep class com.d10ng.stringlib.** {*;}
 -dontwarn com.d10ng.stringlib.**
 ```
