@@ -6,8 +6,9 @@ plugins {
     id 'maven-publish'
 }
 
+def ver = "1.6"
 group = "com.github.D10NGYANG"
-version = "1.4"
+version = ver
 
 repositories {
     mavenCentral()
@@ -16,7 +17,7 @@ repositories {
 
 jar {
     archivesBaseName = 'DLStringUtil'
-    version(1.6)
+    version(ver)
 }
 
 java {
