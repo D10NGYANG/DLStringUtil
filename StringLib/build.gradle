@@ -7,9 +7,14 @@ plugins {
 group = "com.dl10ng"
 version = "1.4"
 
+repositories {
+    mavenCentral()
+    maven { url "https://jitpack.io" }
+}
+
 jar {
     archivesBaseName = 'DLStringUtil'
-    version(1.4)
+    version(1.5)
 }
 
 java {
