@@ -2,9 +2,11 @@ plugins {
     id 'java-library'
     id 'kotlin'
     id 'kotlin-kapt'
+    id 'maven'
+    id 'maven-publish'
 }
 
-group = "com.dl10ng"
+group = "com.github.D10NGYANG"
 version = "1.4"
 
 repositories {
@@ -14,7 +16,7 @@ repositories {
 
 jar {
     archivesBaseName = 'DLStringUtil'
-    version(1.5)
+    version(1.6)
 }
 
 java {
