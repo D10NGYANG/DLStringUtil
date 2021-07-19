@@ -14,7 +14,7 @@ allprojects {
 2 Add the dependency
 ```gradle
 dependencies {
-        implementation 'com.github.D10NGYANG:DLStringUtil:1.3'
+        implementation 'com.github.D10NGYANG:DLStringUtil:1.4'
 }
 ```
 3 混淆
