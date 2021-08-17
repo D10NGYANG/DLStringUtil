@@ -6,7 +6,7 @@ plugins {
     id 'maven-publish'
 }
 
-def ver = "1.7"
+def ver = "1.8"
 group = "com.github.D10NGYANG"
 version = ver
 
@@ -27,4 +27,7 @@ java {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    // 协程
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1"
 }

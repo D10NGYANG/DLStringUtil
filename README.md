@@ -14,7 +14,10 @@ allprojects {
 2 Add the dependency
 ```gradle
 dependencies {
-    implementation 'com.github.D10NGYANG:DLStringUtil:1.7'
+    // 字符串字节数据工具
+    implementation 'com.github.D10NGYANG:DLStringUtil:1.8'
+    // 协程
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1"
 }
 ```
 3 混淆

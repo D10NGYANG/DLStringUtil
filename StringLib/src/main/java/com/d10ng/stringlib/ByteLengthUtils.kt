@@ -32,3 +32,23 @@ fun ByteArray.up2Length(
         else list.subList(0, length).toByteArray()
     } else list.toByteArray()
 }
+
+/**
+ * 从ByteArray中查找特定ByteArray的位置
+ * # 如果没有找到就返回-1
+ * @receiver [ByteArray] 输入ByteArray
+ * @param bs [ByteArray] 检索ByteArray
+ * @return [Int] 首个位置index
+ */
+fun ByteArray.findFirstIndex(bs: ByteArray): Int {
+    var index = 0
+    while (true) {
+        val temp = this.copyOfRange(index, this.size)
+        val i = temp.indexOf(bs[0])
+        if (i < 0) return -1
+        index += i
+        if (temp.copyOfRange(i, i + bs.size).contentEquals(bs)) {
+            return index
+        }
+    }
+}

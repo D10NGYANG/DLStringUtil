@@ -1,5 +1,7 @@
 package com.d10ng.stringlib
 
+import java.nio.charset.Charset
+
 /**
  * 将 byte 转换成无符号整型
  * @receiver [Byte]
@@ -201,3 +203,17 @@ fun String.hexString2ByteArray(): ByteArray {
     }
     return list.toByteArray()
 }
+
+/**
+ * 将 ByteArray 转中文字符串
+ * @receiver [ByteArray]
+ * @return [String]
+ */
+fun ByteArray.toHanZiString() = toString(Charset.forName("GBK"))
+
+/**
+ * 将中文字符串转 ByteArray
+ * @receiver [String]
+ * @return [ByteArray]
+ */
+fun String.toHanZiByteArray() = toByteArray(Charset.forName("GBK"))
