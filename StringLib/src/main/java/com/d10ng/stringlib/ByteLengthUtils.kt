@@ -47,6 +47,7 @@ fun ByteArray.findFirstIndex(bs: ByteArray): Int {
         val i = temp.indexOf(bs[0])
         if (i < 0) return -1
         index += i
+        if (i + bs.size > temp.size) return -1
         if (temp.copyOfRange(i, i + bs.size).contentEquals(bs)) {
             return index
         }

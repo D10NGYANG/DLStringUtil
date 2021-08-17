@@ -11,6 +11,10 @@ import java.nio.charset.Charset
  */
 class ByteArraySplitTools(
     /**
+     * 每次处理字节数量
+     */
+    private val oneSize: Int = 50,
+    /**
      * 开始标记
      */
     private val splitStart: ByteArray,
@@ -38,28 +42,30 @@ class ByteArraySplitTools(
             var tempData = mutableListOf<Byte>()
             while (receiveData.isNotEmpty()) {
                 // 每一次抓50个包出来处理
-                val dataObj = changeReceiveData(byteArrayOf(), Type.COPY, 50)
+                val dataObj = changeReceiveData(Type.COPY, endIndex = oneSize)
                 tempData.addAll(dataObj)
-                changeReceiveData(byteArrayOf(), Type.REMOVE, 50)
+                changeReceiveData(Type.REMOVE, endIndex = oneSize)
                 // 找到开始标记所在位置
                 val startIndex = tempData.toByteArray().findFirstIndex(splitStart)
-                if (startIndex < 0) continue
+                if (startIndex < 0) {
+                    tempData.clear()
+                    if (receiveData.isEmpty()) delay(100)
+                    continue
+                } else if (startIndex != 0) {
+                    tempData = tempData.subList(startIndex, tempData.size)
+                }
                 // 找到结束标记所在位置
                 val endIndex = tempData.toByteArray().findFirstIndex(splitEnd) + splitEnd.size
-                if (endIndex < splitEnd.size) continue
-                // 如果结束标记在开始标记之前，说明这个结束标记是上一条数据的结束标记，抛弃掉
-                if (startIndex > endIndex) {
-                    tempData.removeAll(tempData.subList(0, endIndex))
+                if (endIndex < splitEnd.size) {
+                    if (receiveData.isEmpty()) delay(100)
                     continue
                 }
                 // 将完整一条数据拿出来，推出去
-                handlerOneBack.invoke(tempData.subList(startIndex, endIndex).toByteArray())
+                handlerOneBack.invoke(tempData.subList(0, endIndex).toByteArray())
                 // 将剩余的数据存到临时数据里，等待下一次拼接处理
                 tempData = tempData.subList(endIndex, tempData.size)
                 // 如果接收数据空了，就再等一点时间，可能下一句消息就收到了
-                if (receiveData.isEmpty()) {
-                    delay(100)
-                }
+                if (receiveData.isEmpty()) delay(100)
             }
         }
     }
@@ -70,19 +76,19 @@ class ByteArraySplitTools(
      */
     @Synchronized
     fun addData(data: ByteArray) {
-        changeReceiveData(data, Type.ADD)
+        changeReceiveData(Type.ADD, data)
         startJob()
     }
 
     /**
      * 修改数据状态
-     * @param data ByteArray 数据
      * @param type Type 操作类型
+     * @param data ByteArray 数据
      * @param endIndex Int 最后一个数据的位置
      * @return List<Byte>
      */
     @Synchronized
-    private fun changeReceiveData(data: ByteArray, type: Type, endIndex: Int = 1): List<Byte> {
+    private fun changeReceiveData(type: Type, data: ByteArray = byteArrayOf(), endIndex: Int = 1): List<Byte> {
         when (type) {
             Type.COPY -> return receiveData.subList(0, endIndex.coerceAtMost(receiveData.size))
             Type.ADD -> receiveData.addAll(data.toList())
@@ -95,15 +101,15 @@ class ByteArraySplitTools(
     }
 
     /** 操作类型 */
-    enum class Type {
+    private enum class Type {
         COPY,
         ADD,
         REMOVE
     }
 }
 
-/*
-fun main() = runBlocking {
+
+/*fun main() = runBlocking {
     val json = "{\"type\":\"SERIAL_PORT_DATA\",\"portName\":\"COM3\",\"dataHex\":\"2442444253492c30352c30302c302c312c302c302c342c302c302c322c302c302a35430d0a\"}"
     val builder = StringBuilder()
     val max = 1000
@@ -112,7 +118,7 @@ fun main() = runBlocking {
     }
     val startTime = System.currentTimeMillis()
     var i = 0
-    val tools = ByteArraySplitTools(byteArrayOf('{'.code.toByte()), byteArrayOf('}'.code.toByte())) {
+    val tools = ByteArraySplitTools(50, byteArrayOf('{'.code.toByte()), byteArrayOf('}'.code.toByte())) {
         println(it.toString(Charset.forName("GBK")))
         i ++
         if (i >= max) {

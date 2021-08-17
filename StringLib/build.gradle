@@ -6,7 +6,7 @@ plugins {
     id 'maven-publish'
 }
 
-def ver = "1.8"
+def ver = "1.9"
 group = "com.github.D10NGYANG"
 version = ver
 
