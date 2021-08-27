@@ -5,7 +5,6 @@ import java.nio.charset.Charset
 import java.security.KeyFactory
 import java.security.MessageDigest
 import java.security.spec.X509EncodedKeySpec
-import java.util.*
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
@@ -15,9 +14,9 @@ private var PASSWORD_ENC_SECRET = "hailiao-20210318"
 /** 加密算法 */
 private const val KEY_ALGORITHM = "AES"
 /** 字符编码 */
-private val CHARSET = Charset.forName("UTF-8")
+private val CHARSET = Charsets.UTF_8
 /** 加解密算法/工作模式/填充方式 */
-private const val CIPHER_ALGORITHM = "AES/CBC/PKCS7Padding"
+private const val CIPHER_ALGORITHM = "AES/CBC/PKCS5Padding"
 
 /**
  * 对字符串加密
@@ -39,7 +38,7 @@ fun String.encrypt(
     val keySpec = SecretKeySpec(byteArray, keyAlgorithm)
     cipher.init(Cipher.ENCRYPT_MODE, keySpec, IvParameterSpec(byteArray))
     val encrypted = cipher.doFinal(this.toByteArray(charset))
-    return Base64.getEncoder().encodeToString(encrypted)
+    return encrypted.encodeBase64ToString()
 }
 
 /**
@@ -57,7 +56,7 @@ fun String.decrypt(
     cipherAlgorithm: String = CIPHER_ALGORITHM,
     charset: Charset = CHARSET
 ): String {
-    val encrypted = Base64.getDecoder().decode(this.toByteArray(charset))
+    val encrypted = this.toByteArray(charset).decodeBase64()
     val cipher = Cipher.getInstance(cipherAlgorithm)
     val byteArray = key.toByteArray(charset)
     val keySpec = SecretKeySpec(byteArray, keyAlgorithm)
@@ -82,14 +81,14 @@ fun String.encryptByPublicKey(
     charset: Charset = CHARSET
 ): String {
     // 得到公钥对象
-    val keySpec = X509EncodedKeySpec(Base64.getDecoder().decode(publicKey.toByteArray(charset)))
+    val keySpec = X509EncodedKeySpec(publicKey.toByteArray(charset).decodeBase64())
     val keyFactory = KeyFactory.getInstance(keyAlgorithm)
     val pubKey = keyFactory.generatePublic(keySpec)
     // 加密数据
     val cipher = Cipher.getInstance(cipherAlgorithm)
     cipher.init(Cipher.ENCRYPT_MODE, pubKey)
     val encrypted = cipher.doLongerCipherFinal(this.toByteArray(charset))
-    return Base64.getEncoder().encodeToString(encrypted)
+    return encrypted.encodeBase64ToString()
 }
 
 /**
@@ -128,4 +127,3 @@ fun String.md5(): String {
     }
     return hex.toString()
 }
-

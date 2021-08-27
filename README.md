@@ -15,7 +15,7 @@ allprojects {
 ```gradle
 dependencies {
     // 字符串字节数据工具
-    implementation 'com.github.D10NGYANG:DLStringUtil:1.9'
+    implementation 'com.github.D10NGYANG:DLStringUtil:1.10'
     // 协程
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1"
 }
