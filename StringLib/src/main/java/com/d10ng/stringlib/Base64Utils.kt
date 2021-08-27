@@ -21,7 +21,7 @@ val BASE64_URL = charArrayOf(
  * @receiver String
  * @return ByteArray?
  */
-fun String.decodeBase64ToByteArray(): ByteArray? {
+fun String.decodeBase64ToByteArray(): ByteArray {
     // Ignore trailing '=' padding and whitespace from the input.
     var limit = length
     while (limit > 0) {
@@ -64,7 +64,7 @@ fun String.decodeBase64ToByteArray(): ByteArray? {
         } else if (c == '\n' || c == '\r' || c == ' ' || c == '\t') {
             continue
         } else {
-            return null
+            return byteArrayOf()
         }
 
         // Append this char's 6 bits to the word.
@@ -82,7 +82,7 @@ fun String.decodeBase64ToByteArray(): ByteArray? {
     when (inCount % 4) {
         1 -> {
             // We read 1 char followed by "===". But 6 bits is a truncated byte! Fail.
-            return null
+            return byteArrayOf()
         }
         2 -> {
             // We read 2 chars followed by "==". Emit 1 byte with 8 of those 12 bits.
@@ -105,13 +105,13 @@ fun String.decodeBase64ToByteArray(): ByteArray? {
 }
 
 fun String.decodeBase64(): String =
-    decodeBase64ToByteArray()?.toString(Charsets.UTF_8)?: ""
+    decodeBase64ToByteArray().toString(Charsets.UTF_8)?: ""
 
-fun ByteArray.decodeBase64(): ByteArray? =
+fun ByteArray.decodeBase64(): ByteArray =
     toString(Charsets.UTF_8).decodeBase64ToByteArray()
 
 fun ByteArray.decodeBase64ToString(): String =
-    decodeBase64()?.toString(Charsets.UTF_8)?: ""
+    decodeBase64().toString(Charsets.UTF_8)
 
 /**
  * Base64加密
