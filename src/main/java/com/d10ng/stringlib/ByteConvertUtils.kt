@@ -91,10 +91,8 @@ fun Long.toByteArray(): ByteArray {
  * @receiver [Byte]
  * @return [String]
  */
-fun Byte.toBinString(): String {
-    val str = Integer.toBinaryString(this.toInt())
-    return str.up2Length(8)
-}
+fun Byte.toBinString(): String =
+    this.toUByte().toString(2).up2Length(8)
 
 /**
  * 将 8位 二进制字符串 "00110011" 转为 Byte

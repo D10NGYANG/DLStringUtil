@@ -1,7 +1,5 @@
 package com.d10ng.stringlib
 
-import java.util.*
-
 /**
  * 以字节单位获得字符串的长度
  * 汉字 - 占两个Byte长度
@@ -10,8 +8,9 @@ import java.util.*
  */
 fun String.getByteLength(): Int {
     var length = 0
-    for (i in this.indices) {
-        val ascii = Character.codePointAt(this, i)
+    val chars = this.toCharArray()
+    for (i in chars.iterator()) {
+        val ascii = i.code
         if (ascii in 0..255) length++
         else length += 2
     }
@@ -58,7 +57,7 @@ fun String.up2Length(
  */
 fun String.getFirstUpperCase(): String {
     return try {
-        this.substring(0, 1).uppercase(Locale.getDefault())
+        this.substring(0, 1).uppercase()
     } catch (e: Exception) {
         e.printStackTrace()
         ""

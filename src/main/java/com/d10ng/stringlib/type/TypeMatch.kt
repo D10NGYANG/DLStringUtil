@@ -1,5 +1,7 @@
 package com.d10ng.stringlib.type
 
+import kotlin.reflect.KClass
+
 /**
  * 类型识别工具
  *
@@ -7,39 +9,29 @@ package com.d10ng.stringlib.type
  * @date on 2019-10-23 16:33
  */
 
-fun Class<*>.isString() =
-    this == String::class.java
-            || this == java.lang.String::class.java
+fun KClass<*>.isString() =
+    this == String::class
 
-fun Class<*>.isBoolean() =
-    this == Boolean::class.java
-            || this == java.lang.Boolean::class.java
+fun KClass<*>.isBoolean() =
+    this == Boolean::class
 
-fun Class<*>.isInt() =
-    this == Int::class.java
-            || this == Integer::class.java
-            || this == Short::class.java
-            || this == java.lang.Integer::class.java
-            || this == java.lang.Short::class.java
+fun KClass<*>.isInt() =
+    this == Int::class || this == Short::class
 
-fun Class<*>.isLong() =
-    this == Long::class.java
-            || this == java.lang.Long::class.java
+fun KClass<*>.isLong() =
+    this == Long::class
 
-fun Class<*>.isDouble() =
-    this == Double::class.java
-            || this == java.lang.Double::class.java
+fun KClass<*>.isDouble() =
+    this == Double::class
 
-fun Class<*>.isFloat() =
-    this == Float::class.java
-            || this == java.lang.Float::class.java
+fun KClass<*>.isFloat() =
+    this == Float::class
 
-fun Class<*>.isByte() =
-    this == Byte::class.java
-            || this == java.lang.Byte::class.java
+fun KClass<*>.isByte() =
+    this == Byte::class
 
-fun Class<*>.isByteArray() =
-    this == ByteArray::class.java
+fun KClass<*>.isByteArray() =
+    this == ByteArray::class
 
-fun Class<*>.isList() =
-    this == List::class.java
+fun KClass<*>.isList() =
+    this == List::class

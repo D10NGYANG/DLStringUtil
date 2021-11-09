@@ -1,16 +1,12 @@
 package com.d10ng.stringlib
 
-import java.util.regex.Pattern
-
 /**
  * 判断字符串是否符合身份证规则
  *
  * @receiver [String]
  * @return [Boolean]
  */
-fun String.isIdCard(): Boolean {
-    return Pattern.matches("(^\\d{15}$)|(^\\d{17}([0-9]|X)$)", this)
-}
+fun String.isIdCard(): Boolean = "(^\\d{15}$)|(^\\d{17}([0-9]|X)$)".toRegex().matches(this)
 
 /**
  * 判断字符串是否符合手机号码规则
@@ -18,9 +14,7 @@ fun String.isIdCard(): Boolean {
  * @receiver [String]
  * @return [Boolean]
  */
-fun String.isMobileNumber(): Boolean {
-    return Pattern.matches("^1[1-9]\\d{9}$", this)
-}
+fun String.isMobileNumber(): Boolean = "^1[1-9]\\d{9}$".toRegex().matches(this)
 
 /**
  * 判断字符串是否符合邮箱规则
@@ -28,9 +22,7 @@ fun String.isMobileNumber(): Boolean {
  * @receiver [String]
  * @return [Boolean]
  */
-fun String.isEmail(): Boolean {
-    return Pattern.matches("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", this)
-}
+fun String.isEmail(): Boolean = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$".toRegex().matches(this)
 
 /**
  * 判断字符串是否只有中英文数字，不包含特殊字符
@@ -38,9 +30,7 @@ fun String.isEmail(): Boolean {
  * @receiver [String]
  * @return [Boolean]
  */
-fun String.isOnlyChEnNum(): Boolean {
-    return Pattern.matches("[a-zA-Z0-9\u4E00-\u9FA5]+", this)
-}
+fun String.isOnlyChEnNum(): Boolean = "[a-zA-Z0-9\u4E00-\u9FA5]+".toRegex().matches(this)
 
 /**
  * 判断字符串是否只有中文
@@ -48,9 +38,7 @@ fun String.isOnlyChEnNum(): Boolean {
  * @receiver [String]
  * @return [Boolean]
  */
-fun String.isOnlyChinese(): Boolean {
-    return Pattern.matches("[\u4E00-\u9FA5]+", this)
-}
+fun String.isOnlyChinese(): Boolean = "[\u4E00-\u9FA5]+".toRegex().matches(this)
 
 /**
  * 判断字符串是否只有英文
@@ -58,9 +46,7 @@ fun String.isOnlyChinese(): Boolean {
  * @receiver [String]
  * @return [Boolean]
  */
-fun String.isOnlyEnglish(): Boolean {
-    return Pattern.matches("[a-zA-Z]+", this)
-}
+fun String.isOnlyEnglish(): Boolean = "[a-zA-Z]+".toRegex().matches(this)
 
 /**
  * 判断字符串是否只有数字
@@ -68,6 +54,4 @@ fun String.isOnlyEnglish(): Boolean {
  * @receiver [String]
  * @return [Boolean]
  */
-fun String.isOnlyNumber(): Boolean {
-    return Pattern.matches("[0-9]+", this)
-}
+fun String.isOnlyNumber(): Boolean = "[0-9]+".toRegex().matches(this)
