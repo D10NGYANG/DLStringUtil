@@ -29,5 +29,5 @@ dependencies {
     api("com.soywiz.korlibs.krypto:krypto:2.4.7")
     // 深复制
     // https://mvnrepository.com/artifact/com.bennyhuo.kotlin.reflect/deepcopy-reflect
-    api("com.bennyhuo.kotlin.reflect:deepcopy-reflect:1.5.0")
+    //api("com.bennyhuo.kotlin.reflect:deepcopy-reflect:1.5.0")
 }
