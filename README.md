@@ -1,6 +1,9 @@
 # DLStringUtil
 字符串、字节数据和类处理工具[![](https://jitpack.io/v/D10NGYANG/DLStringUtil.svg)](https://jitpack.io/#D10NGYANG/DLStringUtil)
 
+# 停止维护⚠️
+> 相关功能已迁移到[DLTextUtil](https://github.com/D10NGYANG/DLTextUtil)，当前仓库已停止维护！！
+
 ## 使用
 1 Add it in your root build.gradle at the end of repositories:
 ```gradle
